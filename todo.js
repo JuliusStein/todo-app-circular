@@ -18,8 +18,11 @@ function addTask() {
         when it is unclicked, it returns to gray. */ 
         li.addEventListener('click', function(e) {
             e.target.classList.toggle('clicked');
+            renderCircle();
         });
     }
+    console.log("addTask() called");
+    renderCircle();
 }
 
 // Add event listener on page init.
@@ -31,12 +34,14 @@ function init() {
             addTask();
         }
     });
+    renderCircle();
 }
 
 // Clear all existing tasks.
 function clearAll() {
     let ul = document.querySelector("#tasksList");
     ul.innerHTML = "";
+    resetCircle();
 }
 
 // Clear any completed tasks by removing any items with the "clicked" class on it.
@@ -48,4 +53,64 @@ function clearCompleted() {
             item.remove();
         }
     });
+    renderCircle();
+}
+
+// reset the circle to its original state
+function resetCircle() {
+    var c = document.querySelector("#circle");
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = 'rgb(175, 54, 255)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(150, 150, 120, 0, 2 * Math.PI);
+    ctx.stroke();
+}
+
+// update the circle based on the list items and their completion status
+function renderCircle() {
+    
+    var numCompleted = 0;
+    let ul = document.querySelector("#tasksList");
+    const items = ul.querySelectorAll("li");
+    items.forEach(function(item) {
+        if (item.classList.contains("clicked")) {
+            numCompleted++;
+        }
+    });
+
+    var percentComplete = numCompleted / items.length;
+    if (isNaN(percentComplete)) {
+        percentComplete = 0;
+    } 
+    var completeString = Math.round(percentComplete * 100) + "%";
+    console.log(completeString + " completed");
+   
+    
+    // render the thin circle
+    var c = document.querySelector("#circle");
+    var ctx = c.getContext("2d");
+    ctx.strokeStyle = 'rgb(175, 54, 255)';
+    resetCircle(); 
+
+    // render the thick circle
+    ctx.lineWidth = 15;
+    ctx.beginPath();
+    ctx.arc(150, 150, 120, 1.5 * Math.PI, (percentComplete * 2*Math.PI) + (1.5 * Math.PI));
+    ctx.stroke();
+
+    // render text of the completion percent
+    ctx.font = "52px Poppins";
+    ctx.fillStyle = 'rgb(175, 54, 255)';
+    if(percentComplete == 1) {
+        ctx.fillText(completeString, 95, 170); 
+    } else if (percentComplete >= .1) {
+        ctx.fillText(completeString, 105, 170); 
+    }else{
+        ctx.fillText(completeString, 120, 170); 
+    }
+
+
+    //let outerDiv = document.querySelector("#completion");    
 }

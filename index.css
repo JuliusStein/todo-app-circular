@@ -1,7 +1,7 @@
 /* Use dark mode with black background & white text. */
 body {
     padding: 50px;
-    background-color: #000000;
+    background-color: #222222;
     font-family: 'Poppins';
     color: #ffffff;
 }
@@ -69,4 +69,12 @@ li.clicked {
 
 ul {
     padding: 0px;
+}
+
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }

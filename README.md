@@ -1,4 +1,4 @@
-# todo-app-vanilla
+# todo-app-circular
 A simple to do list web app powered only by HTML, CSS, and vanilla ES5 JavaScript.
 
 ## Install http-server
