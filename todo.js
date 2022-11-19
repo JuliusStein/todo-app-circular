@@ -103,7 +103,9 @@ function renderCircle() {
     // render text of the completion percent
     ctx.font = "52px Poppins";
     ctx.fillStyle = 'rgb(175, 54, 255)';
-    if(percentComplete == 1) {
+    if(items.length == 0) {
+        ctx.fillText("", 95, 170);
+    }else if(percentComplete == 1) {
         ctx.fillText(completeString, 95, 170); 
     } else if (percentComplete >= .1) {
         ctx.fillText(completeString, 105, 170); 
